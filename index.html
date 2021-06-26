@@ -61,8 +61,8 @@
 		<button data-abtest="ex-01" data-variant="b">더 알아보기</button>
 
 		<script>
-			const experimentId = 'ex-01'
-			const optimizeId = 'OPT-TW58XDW'
+			const experimentName = 'ex-01'
+			const experimentId = 'b6GUWhfjQlSJiCPVWhkWEw'
 			const variantMapper = {
 				1: 'a',
 				2: 'b',
@@ -72,16 +72,17 @@
 			}
 
 			gtag('event', 'optimize.callback', {
-				name: optimizeId,
+				name: experimentId,
 				callback: (value) => {
 					const variant = variantMapper[value]
 					const abtestElements = document.querySelectorAll(
-						`[data-abtest="${experimentId}"]`
+						`[data-abtest="${experimentName}"]`
 					)
 
 					abtestElements.forEach((abTestElement) => {
 						if (abTestElement.dataset.variant === variant) {
-							abTestElement.style.display = ''
+							delete abTestElement.dataset.abtest
+							delete abTestElement.dataset.variant
 						} else {
 							abTestElement.remove()
 						}
