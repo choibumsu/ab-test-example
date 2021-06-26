@@ -21,8 +21,73 @@
 			gtag('config', 'UA-200609499-1')
 		</script>
 		<script src="https://www.googleoptimize.com/optimize.js?id=OPT-TW58XDW"></script>
+
+		<style>
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100vw;
+				height: 100vh;
+			}
+
+			.dp-block {
+				display: block;
+			}
+
+			h1.head-title {
+				font-size: 36px;
+				letter-spacing: -0.01em;
+				color: #222;
+			}
+
+			[data-abtest] {
+				display: none;
+			}
+		</style>
 	</head>
 	<body>
-		hi
+		<h1 class="head-title" data-abtest="ex-01" data-variant="a">
+			<span class="dp-block">프론트엔드 개발자</span>
+			<span class="dp-block">최범수입니다.</span>
+		</h1>
+		<h1 class="head-title" data-abtest="ex-01" data-variant="b">
+			<span class="dp-block">안녕하세요 👋</span>
+			<span class="dp-block">프론트엔드 개발자 🧑🏻‍💻</span>
+			<span class="dp-block">최범수입니다~</span>
+			<span class="dp-block">잘 부탁드립니다</span>
+		</h1>
+		<button data-abtest="ex-01" data-variant="a">더보기</button>
+		<button data-abtest="ex-01" data-variant="b">더 알아보기</button>
+
+		<script>
+			const experimentId = 'ex-01'
+			const optimizeId = 'OPT-TW58XDW'
+			const variantMapper = {
+				1: 'a',
+				2: 'b',
+				3: 'c',
+				4: 'd',
+				5: 'e',
+			}
+
+			gtag('event', 'optimize.callback', {
+				name: optimizeId,
+				callback: (value) => {
+					const variant = variantMapper[value]
+					const abtestElements = document.querySelectorAll(
+						`[data-abtest="${experimentId}"]`
+					)
+
+					abtestElements.forEach((abTestElement) => {
+						if (abTestElement.dataset.variant === variant) {
+							abTestElement.style.display = ''
+						} else {
+							abTestElement.remove()
+						}
+					})
+				},
+			})
+		</script>
 	</body>
 </html>
