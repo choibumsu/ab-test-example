@@ -91,17 +91,13 @@
 
 		<script>
 			function abtest(experimentId, experimentName) {
-				const variantMapper = {
-					1: 'a',
-					2: 'b',
-					3: 'c',
-					4: 'd',
-					5: 'e',
-				}
-
+				const variantMapper = { 1: 'a', 2: 'b' }
+				
+				console.log(new Date().getTime())
 				gtag('event', 'optimize.callback', {
 					name: experimentId,
 					callback: (value) => {
+						console.log(new Date().getTime())
 						const variant = variantMapper[value]
 						const abtestElements = document.querySelectorAll(
 							`[data-abtest="${experimentName}"]`
